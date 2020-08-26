@@ -60,7 +60,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGBLIGHT_ANIMATIONS
 
 #ifndef IOS_DEVICE_ENABLE
-  #define RGBLIGHT_LIMIT_VAL 180
+  #define RGBLIGHT_LIMIT_VAL 80
   #define RGBLIGHT_VAL_STEP 17
 #else
   #define RGBLIGHT_LIMIT_VAL 50
