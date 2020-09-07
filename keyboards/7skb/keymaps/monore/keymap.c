@@ -336,6 +336,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case JP_PLUS: case JP_ASTR:
         case JP_UNDS: case JP_CIRC: case JP_AMPR: case JP_GRV:
             record->event.pressed ? send_keycode_down(keycode) : send_keycode_up(keycode); 
+            if(LLEFT_ON){
+                LLEFT_ON = false;
+            } 
             return result;
             break;
         }
@@ -403,7 +406,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     #endif
     default:
         if(LLEFT_ON){
-             LLEFT_ON = false;
+            LLEFT_ON = false;
         } 
         result = true;
         break;
