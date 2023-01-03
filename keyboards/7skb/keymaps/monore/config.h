@@ -19,7 +19,7 @@
 /* Select hand configuration */
 /* monore my setting*/
 /* define tapping term */
-#define TAPPING_TERM 150
+#define TAPPING_TERM 100
 #define RETRO_TAPPING
 #define PERMISSIVE_HOLD
 #define TAPPING_FORCE_HOLD

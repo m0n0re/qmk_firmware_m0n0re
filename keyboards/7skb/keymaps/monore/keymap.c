@@ -18,6 +18,7 @@ static bool LLEFT_ON = false;
 enum layer_number {
     _QWERTY = 0,
     _JP_QWETRY,
+    _GAME,
     _FN,
     _ADJUST,
     _KAKKO,
@@ -44,6 +45,7 @@ enum custom_keycodes {
 #define KC_JP MO(_JP_QWETRY)
 #define CHL_JP DF(_JP_QWETRY)
 #define CHL_US DF(_QWERTY)
+#define CHL_GM DF(_GAME)
 
 #define TABCTL LCTL_T(KC_TAB)
 #define ENTCTL LCTL_T(KC_ENT)
@@ -56,9 +58,10 @@ enum custom_keycodes {
 #define EIJI KC_F13
 #define KANA KC_F14
 
-#define JP_LAYOUT true
-#define US_LAYOUT false
-bool LAYOUT_STATUS = US_LAYOUT;
+#define  JP_LAYOUT 0
+#define  US_LAYOUT 1
+#define  GAME_LAYOUT 2
+int LAYOUT_STATUS = US_LAYOUT;
 
 #define EN2JP_AT KC_LBRC // JP @
 #define EN2JP_CIRC KC_EQL // JP ^
@@ -110,6 +113,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                _______, _______,   JP_KK,  JP_SPL,              _______, JP_SPR,          _______, _______
           //`---------------------------------------------|   |--------------------------------------------'
   ),
+[_GAME] = LAYOUT(
+  //,-----------------------------------------------------|   |--------------------------------------------------------------------------------.
+      _______,    JP_1,    JP_2,    JP_3,    JP_4,    JP_5,        JP_6,    JP_7,    JP_8,    JP_9,    JP_0, JP_MINS,  JP_EQL, JP_BSLS,  JP_GRV,
+  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------+--------+--------|
+      _______,    JP_Q,    JP_W,    JP_E,    JP_R,    JP_T,        JP_Y,    JP_U,    JP_I,    JP_O,    JP_P, JP_LBRC, JP_RBRC,KC_BSPC,
+  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------+--------|
+      _______,    JP_A,    JP_S,    JP_D,    JP_F,    JP_G,        JP_H,    JP_J,    JP_K,    JP_L, JP_SCLN, JP_QUOT, _______,
+  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
+      _______,    JP_Z,    JP_X,    JP_C,    JP_V,    JP_B,        JP_N,    JP_M, JP_COMM,  JP_DOT, JP_SLSH, _______, _______,
+  //|--------+--------+--------+-------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
+               _______, _______,   JP_KK,  KC_SPC,              _______, JP_SPR,          _______, _______
+          //`---------------------------------------------|   |--------------------------------------------'
+  ),
 
   [_FN] = LAYOUT(
   //,-----------------------------------------------------|   |--------------------------------------------------------------------------------.
@@ -135,7 +151,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
       _______, _______, _______, _______, _______, _______,     RGB_VAD, RGB_VAI, RGB_HUD, RGB_HUI, RGB_SAD, RGB_SAI, _______,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
-                CHL_JP, _______, _______, _______,               CHL_US, _______,          KC_STOP, _______
+                CHL_JP, _______, _______,  CHL_GM,               CHL_US, _______,          KC_STOP, _______
           //`---------------------------------------------|   |--------------------------------------------'
   ),
   [_KAKKO] = LAYOUT(
@@ -229,6 +245,9 @@ layer_state_t layer_state_set_user(layer_state_t state) {
         rgblight_sethsv_at( 50, 50, 50 , 0);
         break;
     case _ADJUST:
+        rgblight_sethsv_at(HSV_RED , 0);
+        break;
+    case _GAME:
         rgblight_sethsv_at(HSV_RED , 0);
         break;
     default: //  for any other layers, or the default layer
@@ -363,6 +382,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (record->event.pressed) {
             LAYOUT_STATUS = US_LAYOUT;
             // layer_state_set(_QWERTY);
+        } 
+        result = true;
+        break;
+    case CHL_GM:
+        if (record->event.pressed) {
+            LAYOUT_STATUS = GAME_LAYOUT;
         } 
         result = true;
         break;
