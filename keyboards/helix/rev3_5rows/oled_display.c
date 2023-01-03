@@ -29,10 +29,15 @@
 
 // Defines names for use in layer keycodes and the keymap
 enum layer_names {
-  _QWERTY = 0,
-  _LOWER,
-  _RAISE,
-  _ADJUST
+  _PAINT1 = 0,
+  _PAINT2,
+  _PAINT3,
+  _SYSTEM,
+  _BASE,
+  _OPT,
+  _FUNC,
+  _SYM,
+  _NUM
 };
 
 #ifdef OLED_DRIVER_ENABLE
@@ -57,17 +62,32 @@ void render_status(void) {
   oled_write_P(PSTR("Layer: "), false);
 
   switch (get_highest_layer(layer_state)) {
-      case _QWERTY:
-          oled_write_P(PSTR("Default\n"), false);
+      case _PAINT1:
+          oled_write_P(PSTR("PAINT1\n"), false);
           break;
-      case _RAISE:
-          oled_write_P(PSTR("Raise\n"), false);
+      case _PAINT2:
+          oled_write_P(PSTR("PAINT2\n"), false);
           break;
-      case _LOWER:
-          oled_write_P(PSTR("Lower\n"), false);
+      case _PAINT3:
+          oled_write_P(PSTR("PAINT3\n"), false);
           break;
-      case _ADJUST:
-          oled_write_P(PSTR("Adjust\n"), false);
+      case _SYSTEM:
+          oled_write_P(PSTR("SYSTEM\n"), false);
+          break;
+      case _BASE:
+          oled_write_P(PSTR("FROGGY-BASE\n"), false);
+          break;
+      case _OPT:
+          oled_write_P(PSTR("FROGGY-OPT\n"), false);
+          break;
+      case _FUNC:
+          oled_write_P(PSTR("FROGGY-FUNC\n"), false);
+          break;
+      case _SYM:
+          oled_write_P(PSTR("FROGGY-SYM\n"), false);
+          break;
+      case _NUM:
+          oled_write_P(PSTR("FROGGY-NUM\n"), false);
           break;
       default:
           // Or use the write_ln shortcut over adding '\n' to the end of your string
@@ -77,10 +97,10 @@ void render_status(void) {
   oled_write_P(PSTR("\n"), false);
 
   // Host Keyboard LED Status
-  led_t led_state = host_keyboard_led_state();
-  oled_write_P(led_state.num_lock ? PSTR("NUM ") : PSTR("    "), false);
-  oled_write_P(led_state.caps_lock ? PSTR("CAP ") : PSTR("    "), false);
-  oled_write_P(led_state.scroll_lock ? PSTR("SCR ") : PSTR("    "), false);
+  //led_t led_state = host_keyboard_led_state();
+  // oled_write_P(led_state.num_lock ? PSTR("NUM ") : PSTR("    "), false);
+  // oled_write_P(led_state.caps_lock ? PSTR("CAP ") : PSTR("    "), false);
+  // oled_write_P(led_state.scroll_lock ? PSTR("SCR ") : PSTR("    "), false);
 }
 
 
